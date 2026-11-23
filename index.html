@@ -1,0 +1,592 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Blueair</title>
+<!-- Placeholder content: prices, specs, reviews, brand names and stats are examples. Replace with real details. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:ital,wght@0,600;0,700;0,800;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  /* Layout concept: airy left-aligned sections on ice blue, one floating "live air" card over a purifier in the hero, soft rounded cards, navy ink, sky-blue accent. */
+  :root {
+    --bg: #F3F9FF;
+    --bg-soft: #E4F1FE;
+    --card: #FFFFFF;
+    --fg: #0B2545;
+    --muted: #4A6385;
+    --accent: #1478E8;
+    --accent-bright: #3BA4FF;
+    --on-accent: #FFFFFF;
+    --line: #D3E5F8;
+    --shadow: 0 12px 32px rgba(11, 37, 69, .09);
+    --shadow-lg: 0 24px 60px rgba(20, 120, 232, .18);
+    --nav-bg: rgba(243, 249, 255, .86);
+    --cta-from: #0B2545;
+    --cta-to: #1478E8;
+    --pur-body: #FFFFFF;
+    --pur-edge: #BFD9F5;
+    --pur-grille: #D9E9FA;
+    --font-display: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+    --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --radius: 22px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #071428; --bg-soft: #0B1D38; --card: #0F2547; --fg: #EAF4FF; --muted: #9DB6D6;
+      --accent: #4DB0FF; --accent-bright: #6BC0FF; --on-accent: #041226; --line: #1C3A63;
+      --shadow: 0 12px 32px rgba(0, 0, 0, .35); --shadow-lg: 0 24px 60px rgba(0, 0, 0, .45);
+      --nav-bg: rgba(7, 20, 40, .86); --cta-from: #0F2F5C; --cta-to: #1B6FD1;
+      --pur-body: #16345F; --pur-edge: #2B5A94; --pur-grille: #234A7C;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #071428; --bg-soft: #0B1D38; --card: #0F2547; --fg: #EAF4FF; --muted: #9DB6D6;
+    --accent: #4DB0FF; --accent-bright: #6BC0FF; --on-accent: #041226; --line: #1C3A63;
+    --shadow: 0 12px 32px rgba(0, 0, 0, .35); --shadow-lg: 0 24px 60px rgba(0, 0, 0, .45);
+    --nav-bg: rgba(7, 20, 40, .86); --cta-from: #0F2F5C; --cta-to: #1B6FD1;
+    --pur-body: #16345F; --pur-edge: #2B5A94; --pur-grille: #234A7C;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--fg);
+    font-family: var(--font-body); font-size: 1rem; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+    z-index: 10; background: var(--bg);
+  }
+  h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; margin: 0; text-wrap: balance; letter-spacing: -0.02em; }
+  p { margin: 0; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--accent-bright); outline-offset: 3px; border-radius: 8px; }
+
+  .wrap {
+    max-width: 1160px; margin-inline: auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 5rem;
+  }
+  section[id] { scroll-margin-top: 72px; }
+  .eyebrow {
+    font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: .9rem;
+  }
+  h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 800; }
+  .lede { color: var(--muted); font-size: 1.1rem; max-width: 52ch; margin-top: 1rem; }
+  .head { margin-bottom: 3rem; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    font: 600 1rem var(--font-body); text-decoration: none; cursor: pointer;
+    padding: .9rem 1.5rem; border-radius: 999px; border: 1.5px solid transparent;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+  }
+  .btn:hover { transform: translateY(-3px); }
+  .btn-primary { background: var(--accent); color: var(--on-accent); box-shadow: 0 10px 24px rgba(20, 120, 232, .3); }
+  .btn-primary:hover { box-shadow: 0 16px 32px rgba(20, 120, 232, .38); }
+  .btn-ghost { background: transparent; color: var(--fg); border-color: var(--line); }
+  .btn-ghost:hover { background: var(--card); box-shadow: var(--shadow); }
+  .btn-sm { padding: .55rem 1.1rem; font-size: .92rem; }
+
+  /* Nav */
+  header.nav {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+    background: var(--nav-bg); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav .wrap { display: flex; align-items: center; gap: 1.5rem; padding-block: .8rem; }
+  .logo { display: inline-flex; align-items: center; gap: .5rem; font: 800 1.4rem var(--font-display); text-decoration: none; letter-spacing: -0.03em; }
+  .logo b { color: var(--accent); font-weight: 800; }
+  .logo svg { width: 24px; height: 24px; }
+  .links { display: flex; gap: 2rem; margin-left: auto; margin-right: 1rem; }
+  .links a { text-decoration: none; font-weight: 500; color: var(--muted); transition: color .15s; }
+  .links a:hover { color: var(--fg); }
+  .nav-actions { display: flex; align-items: center; gap: .6rem; }
+  .cart {
+    position: relative; display: inline-grid; place-items: center; width: 42px; height: 42px;
+    border-radius: 50%; border: 1px solid var(--line); background: var(--card); color: var(--fg); cursor: pointer;
+  }
+  .cart svg { width: 20px; height: 20px; }
+  .cart .count {
+    position: absolute; top: -4px; right: -4px; min-width: 20px; height: 20px; padding: 0 5px;
+    border-radius: 999px; background: var(--accent); color: var(--on-accent);
+    font: 700 .72rem/20px var(--font-body); text-align: center; font-variant-numeric: tabular-nums;
+  }
+  .menu-btn { display: none; width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); color: var(--fg); cursor: pointer; place-items: center; }
+  .menu-btn svg { width: 20px; height: 20px; }
+
+  /* Hero */
+  .hero { position: relative; overflow: hidden; }
+  .hero::before, .hero::after { content: ""; position: absolute; border-radius: 50%; filter: blur(70px); z-index: 0; pointer-events: none; }
+  .hero::before { width: 520px; height: 520px; right: -120px; top: -120px; background: var(--accent-bright); opacity: .28; }
+  .hero::after { width: 380px; height: 380px; left: -140px; bottom: -160px; background: var(--accent); opacity: .14; }
+  .hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr .95fr; gap: 3rem; align-items: center; padding-block: 4.5rem 5rem; }
+  .hero-copy { min-width: 0; }
+  .badge {
+    display: inline-flex; align-items: center; gap: .6rem; padding: .35rem .9rem .35rem .4rem;
+    background: var(--card); border: 1px solid var(--line); border-radius: 999px;
+    font-size: .88rem; font-weight: 500; color: var(--muted); margin-bottom: 1.6rem;
+  }
+  .badge span { background: var(--accent); color: var(--on-accent); font-weight: 700; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; padding: .2rem .6rem; border-radius: 999px; }
+  h1 { font-size: clamp(2.7rem, 7vw, 4.9rem); font-weight: 800; letter-spacing: -0.035em; }
+  h1 em { font-style: italic; font-weight: 700; color: var(--accent); }
+  .hero .lede { font-size: 1.2rem; margin-top: 1.4rem; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+  .assure { margin-top: 1.4rem; font-size: .9rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; }
+  .assure span::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-bright); margin-right: .5rem; vertical-align: middle; }
+
+  .stage { position: relative; min-height: 440px; display: grid; place-items: center; min-width: 0; }
+  .stage .halo { position: absolute; width: min(420px, 90%); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 50% 40%, var(--bg-soft), transparent 70%); border: 1px solid var(--line); }
+  .stage .purifier { position: relative; height: 380px; width: auto; filter: drop-shadow(0 30px 40px rgba(20, 120, 232, .25)); }
+  .live {
+    position: absolute; left: 0; bottom: 6px; width: 250px; background: var(--card);
+    border: 1px solid var(--line); border-radius: var(--radius); padding: 1.1rem 1.2rem; box-shadow: var(--shadow-lg);
+    animation: float 6s ease-in-out infinite;
+  }
+  .live-top { display: flex; align-items: center; justify-content: space-between; gap: .8rem; }
+  .live-label { font-size: .76rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .live-state { font: 800 1.9rem var(--font-display); letter-spacing: -0.03em; }
+  .ring { width: 54px; height: 54px; flex: none; }
+  .live dl { margin: .9rem 0 0; display: grid; gap: .5rem; }
+  .live dl div { display: flex; justify-content: space-between; gap: 1rem; font-size: .9rem; }
+  .live dt { color: var(--muted); }
+  .live dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .bar { height: 6px; border-radius: 99px; background: var(--bg-soft); margin-top: .8rem; overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 92%; border-radius: 99px; background: linear-gradient(90deg, var(--accent-bright), var(--accent)); }
+  .chip {
+    position: absolute; right: 0; top: 28px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 999px; padding: .55rem 1rem; font-size: .88rem; font-weight: 600; box-shadow: var(--shadow);
+    display: inline-flex; align-items: center; gap: .5rem; animation: float 7s ease-in-out -2s infinite;
+  }
+  .chip i { width: 8px; height: 8px; border-radius: 50%; background: #2FCB8B; display: inline-block; }
+  @keyframes float { 50% { transform: translateY(-10px); } }
+
+  /* Trusted */
+  .trusted { border-block: 1px solid var(--line); background: var(--bg-soft); }
+  .trusted .wrap { padding-block: 2rem; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 3rem; }
+  .trusted p { font-weight: 600; font-size: .95rem; }
+  .brands { display: flex; flex-wrap: wrap; gap: .8rem 2.4rem; margin-left: auto; }
+  .brands span { font: 700 1.1rem var(--font-display); color: var(--muted); opacity: .8; letter-spacing: -0.01em; }
+
+  /* Benefits */
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); min-width: 0; }
+  .icon { width: 52px; height: 52px; border-radius: 16px; background: var(--bg-soft); color: var(--accent); display: grid; place-items: center; margin-bottom: 1.4rem; }
+  .icon svg { width: 26px; height: 26px; }
+  .card h3 { font-size: 1.35rem; font-weight: 700; margin-bottom: .6rem; }
+  .card p { color: var(--muted); }
+
+  /* Day */
+  .day { background: var(--bg-soft); }
+  .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4rem; position: relative; }
+  .timeline::before { content: ""; position: absolute; left: 0; right: 0; top: 9px; height: 2px; background: var(--line); }
+  .slot { position: relative; padding-top: 2.2rem; min-width: 0; }
+  .slot::before { content: ""; position: absolute; top: 0; left: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); border: 5px solid var(--bg-soft); box-shadow: 0 0 0 2px var(--accent); }
+  .slot time { display: block; font: 700 .95rem var(--font-display); color: var(--accent); font-variant-numeric: tabular-nums; }
+  .slot h3 { font-size: 1.3rem; font-weight: 700; margin: .3rem 0 .5rem; }
+  .slot p { color: var(--muted); }
+
+  /* How it works */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; counter-reset: s; }
+  .step { counter-increment: s; position: relative; padding: 2rem 0 0; border-top: 2px solid var(--line); min-width: 0; }
+  .step::before { content: "0" counter(s); font: 800 3.4rem var(--font-display); color: var(--accent); opacity: .9; display: block; line-height: 1; margin-bottom: 1rem; letter-spacing: -0.04em; }
+  .step h3 { font-size: 1.35rem; font-weight: 700; margin-bottom: .5rem; }
+  .step p { color: var(--muted); max-width: 32ch; }
+
+  /* Reviews */
+  .reviews { background: var(--bg-soft); }
+  .stars { color: #F5A524; letter-spacing: .15em; font-size: 1.05rem; margin-bottom: 1rem; }
+  blockquote { margin: 0; font-size: 1.1rem; line-height: 1.55; }
+  .who { display: flex; align-items: center; gap: .8rem; margin-top: 1.6rem; }
+  .avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; font: 700 .9rem var(--font-display); flex: none; }
+  .who b { display: block; font-size: .95rem; }
+  .who small { color: var(--muted); }
+
+  /* Models */
+  .models { align-items: stretch; }
+  .model { display: flex; flex-direction: column; padding: 1.4rem; position: relative; }
+  .model.pop { border-color: var(--accent); box-shadow: var(--shadow-lg); }
+  .tag { position: absolute; top: 1.4rem; left: 1.4rem; z-index: 2; background: var(--accent); color: var(--on-accent); font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .3rem .75rem; border-radius: 999px; }
+  .pic { background: var(--bg-soft); border-radius: 16px; height: 250px; display: grid; place-items: end center; padding-bottom: 1.2rem; }
+  .pic svg { width: auto; }
+  .model h3 { font-size: 1.5rem; font-weight: 800; margin: 1.4rem .4rem .2rem; }
+  .model .for { color: var(--muted); margin: 0 .4rem; }
+  .model ul { list-style: none; padding: 0; margin: 1.1rem .4rem 1.4rem; display: grid; gap: .55rem; font-size: .95rem; }
+  .model li { display: flex; gap: .6rem; align-items: flex-start; }
+  .model li::before { content: ""; flex: none; width: 18px; height: 18px; margin-top: 2px; border-radius: 50%; background: var(--bg-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.3l2.6 2.6L13 6.5' fill='none' stroke='%231478E8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/18px no-repeat; }
+  .buy { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0 .4rem .2rem; flex-wrap: wrap; }
+  .price { font: 800 2rem var(--font-display); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .price small { font: 500 .9rem var(--font-body); color: var(--muted); letter-spacing: 0; }
+
+  /* FAQ */
+  .faq-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 3rem; }
+  .faq-list { display: grid; gap: .8rem; min-width: 0; }
+  details { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 0 1.4rem; transition: box-shadow .2s; }
+  details[open] { box-shadow: var(--shadow); }
+  summary { list-style: none; cursor: pointer; padding: 1.15rem 0; font: 700 1.05rem var(--font-display); display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--bg-soft); color: var(--accent); display: grid; place-items: center; font: 600 1.3rem/1 var(--font-body); transition: transform .2s; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { color: var(--muted); padding-bottom: 1.2rem; max-width: 60ch; }
+
+  /* CTA + footer */
+  .cta-wrap { padding-block: 0 5rem; }
+  .cta { background: linear-gradient(135deg, var(--cta-from), var(--cta-to)); color: #fff; border-radius: 32px; padding: clamp(2.2rem, 6vw, 4.5rem); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2rem; position: relative; overflow: hidden; }
+  .cta::after { content: ""; position: absolute; width: 360px; height: 360px; border-radius: 50%; right: -80px; top: -140px; background: rgba(255, 255, 255, .1); }
+  .cta > * { position: relative; z-index: 1; min-width: 0; }
+  .cta h2 { font-size: clamp(2rem, 5vw, 3.2rem); }
+  .cta p { color: rgba(255, 255, 255, .82); margin-top: .8rem; font-size: 1.1rem; }
+  .cta .btn { background: #fff; color: #0B2545; box-shadow: 0 12px 28px rgba(0, 0, 0, .2); }
+  footer { border-top: 1px solid var(--line); }
+  footer .wrap { padding-block: 2.5rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.2rem 2rem; color: var(--muted); font-size: .92rem; }
+  footer nav { display: flex; flex-wrap: wrap; gap: .6rem 1.6rem; }
+  footer a { text-decoration: none; }
+  footer a:hover { color: var(--fg); }
+
+  /* Toast */
+  .toast { position: fixed; left: 50%; bottom: calc(1.4rem + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 140%); background: var(--fg); color: var(--bg); padding: .8rem 1.3rem; border-radius: 999px; font-weight: 600; font-size: .95rem; box-shadow: var(--shadow-lg); transition: transform .35s cubic-bezier(.2, .8, .2, 1); z-index: 40; max-width: calc(100% - 32px); }
+  .toast.show { transform: translate(-50%, 0); }
+
+  /* Scroll reveal: elements below the fold start slightly faded, never hidden */
+  [data-reveal].pre { opacity: .2; transform: translateY(20px); }
+  [data-reveal] { transition: opacity .7s ease, transform .7s ease; transition-delay: var(--d, 0s); }
+  [data-reveal].pre.in { opacity: 1; transform: none; }
+
+  @media (max-width: 960px) {
+    .hero .wrap { grid-template-columns: 1fr; gap: 2rem; padding-block: 3rem 4rem; }
+    .stage { min-height: 420px; }
+    .grid3, .steps { grid-template-columns: 1fr; }
+    .timeline { grid-template-columns: repeat(2, 1fr); row-gap: 2.4rem; }
+    .timeline::before { display: none; }
+    .faq-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .brands { margin-left: 0; }
+    .step p { max-width: none; }
+  }
+  @media (max-width: 760px) {
+    .links { display: none; position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; gap: 0; margin: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: .6rem max(16px, env(safe-area-inset-left, 0px)) 1rem; }
+    .links.open { display: flex; }
+    .links a { padding: .8rem 0; font-size: 1.05rem; }
+    .menu-btn { display: inline-grid; }
+    .nav .wrap { gap: .8rem; }
+    .nav-actions { margin-left: auto; }
+    .wrap { padding-block: 3.5rem; }
+  }
+  @media (max-width: 520px) {
+    .timeline { grid-template-columns: 1fr; }
+    .stage .purifier { height: 320px; }
+    .live { width: 225px; }
+    .chip { top: 8px; }
+    .nav-actions .btn { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .live, .chip { animation: none; }
+    [data-reveal], .btn, .toast { transition: none; }
+    [data-reveal].pre { opacity: 1; transform: none; }
+  }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="purifier" viewBox="0 0 120 220">
+      <ellipse cx="60" cy="208" rx="38" ry="7" fill="rgba(11,37,69,.12)"/>
+      <rect x="18" y="28" width="84" height="172" rx="30" fill="var(--pur-body)" stroke="var(--pur-edge)" stroke-width="2"/>
+      <rect x="18" y="28" width="84" height="26" rx="13" fill="var(--pur-grille)"/>
+      <g stroke="var(--pur-edge)" stroke-width="2" stroke-linecap="round" opacity=".9">
+        <line x1="34" y1="38" x2="86" y2="38"/><line x1="34" y1="45" x2="86" y2="45"/>
+      </g>
+      <g stroke="var(--pur-grille)" stroke-width="5" stroke-linecap="round">
+        <line x1="36" y1="84" x2="84" y2="84"/><line x1="36" y1="100" x2="84" y2="100"/>
+        <line x1="36" y1="116" x2="84" y2="116"/><line x1="36" y1="132" x2="84" y2="132"/>
+        <line x1="36" y1="148" x2="84" y2="148"/>
+      </g>
+      <circle cx="60" cy="176" r="9" fill="#3BA4FF"/>
+      <circle cx="60" cy="176" r="14" fill="none" stroke="#3BA4FF" stroke-opacity=".35" stroke-width="3"/>
+    </symbol>
+    <symbol id="drop" viewBox="0 0 24 24">
+      <path d="M12 2.5c3.6 4.3 6.5 7.6 6.5 11.2A6.5 6.5 0 0 1 12 20.2a6.5 6.5 0 0 1-6.5-6.5C5.5 10.1 8.4 6.8 12 2.5z" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Blueair home"><svg style="color:var(--accent)"><use href="#drop"/></svg>Blue<b>air</b></a>
+    <nav class="links" id="links" aria-label="Main">
+      <a href="#benefits">Benefits</a>
+      <a href="#how">How it works</a>
+      <a href="#models">Models</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="cart" id="cart" type="button" aria-label="Cart, 0 items">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h14l-1.4 11.2a2 2 0 0 1-2 1.8H8.4a2 2 0 0 1-2-1.8L5 7z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>
+        <span class="count" id="count">0</span>
+      </button>
+      <a class="btn btn-primary btn-sm" href="#models">Shop now</a>
+      <button class="menu-btn" id="menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <div class="badge"><span>New</span> Blueair Home 2 is here</div>
+        <h1>Air that feels <em>brand new.</em></h1>
+        <p class="lede">Blueair cleans the air in your room all day, so you can just breathe. Plug it in. That's it.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#models">Shop now</a>
+          <a class="btn btn-ghost" href="#how">See how it works</a>
+        </div>
+        <p class="assure"><span>Free shipping</span><span>30-day returns</span><span>2-year warranty</span></p>
+      </div>
+
+      <div class="stage" aria-label="Blueair purifier with live air readings">
+        <div class="halo"></div>
+        <svg class="purifier" viewBox="0 0 120 220" role="img" aria-label="Blueair purifier"><use href="#purifier"/></svg>
+        <div class="chip"><i></i> Sleep mode · 24 dB</div>
+        <div class="live">
+          <div class="live-top">
+            <div>
+              <div class="live-label">Living room</div>
+              <div class="live-state">Air: Good</div>
+            </div>
+            <svg class="ring" viewBox="0 0 54 54" aria-hidden="true">
+              <circle cx="27" cy="27" r="22" fill="none" stroke="var(--bg-soft)" stroke-width="6"/>
+              <circle cx="27" cy="27" r="22" fill="none" stroke="var(--accent)" stroke-width="6" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="14" transform="rotate(-90 27 27)"/>
+            </svg>
+          </div>
+          <dl>
+            <div><dt>PM2.5</dt><dd><span id="pm">4</span> µg/m³</dd></div>
+            <div><dt>Humidity</dt><dd>45%</dd></div>
+            <div><dt>Filter life</dt><dd>92%</dd></div>
+          </dl>
+          <div class="bar" aria-hidden="true"><i></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="trusted" aria-label="Trusted by">
+    <div class="wrap">
+      <p>Trusted by 12,000+ homes</p>
+      <div class="brands" aria-hidden="true">
+        <span>Northfield</span><span>Aster &amp; Co</span><span>Halden</span><span>Marlow</span><span>Kestrel</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="benefits">
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <p class="eyebrow">Benefits</p>
+        <h2>Fresh air, without the effort.</h2>
+        <p class="lede">Blueair works in the background so every room feels lighter.</p>
+      </div>
+      <div class="grid3">
+        <article class="card" data-reveal style="--d:0s">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h11a3 3 0 1 0-3-3"/><path d="M3 14h15a3 3 0 1 1-3 3"/><path d="M3 19h6"/></svg></div>
+          <h3>Cleaner air</h3>
+          <p>A HEPA filter catches dust, pollen and pet hair. Your room feels lighter in minutes.</p>
+        </article>
+        <article class="card" data-reveal style="--d:.1s">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></div>
+          <h3>Quieter sleep</h3>
+          <p>Sleep mode hums at 24 dB. That's softer than a whisper, and the lights dim too.</p>
+        </article>
+        <article class="card" data-reveal style="--d:.2s">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16z"/></svg></div>
+          <h3>Less dust</h3>
+          <p>Fewer particles floating around means less wiping down shelves and screens.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="day">
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <p class="eyebrow">A day with Blueair</p>
+        <h2>It runs quietly. You do you.</h2>
+        <p class="lede">Blueair adjusts on its own from sunrise to bedtime.</p>
+      </div>
+      <div class="timeline">
+        <div class="slot" data-reveal style="--d:0s"><time>7:00 AM</time><h3>Morning</h3><p>Clears overnight dust before you've had your coffee.</p></div>
+        <div class="slot" data-reveal style="--d:.1s"><time>1:00 PM</time><h3>Afternoon</h3><p>Speeds up while you cook, then settles back down.</p></div>
+        <div class="slot" data-reveal style="--d:.2s"><time>7:00 PM</time><h3>Evening</h3><p>Drops to quiet mode so movie night stays movie night.</p></div>
+        <div class="slot" data-reveal style="--d:.3s"><time>11:00 PM</time><h3>Night</h3><p>Sleep mode dims the lights and hums at 24 dB.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <p class="eyebrow">How it works</p>
+        <h2>Set up in 2 minutes.</h2>
+      </div>
+      <div class="steps">
+        <div class="step" data-reveal style="--d:0s"><h3>Plug it in</h3><p>Pick a spot with a little breathing room. Plug it in. Done.</p></div>
+        <div class="step" data-reveal style="--d:.1s"><h3>It reads the air</h3><p>Built-in sensors check the room and adjust the fan speed for you.</p></div>
+        <div class="step" data-reveal style="--d:.2s"><h3>Breathe easy</h3><p>Peek at the Blueair app, or just enjoy how fresh your home feels.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reviews">
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <p class="eyebrow">Reviews</p>
+        <h2>People notice the difference.</h2>
+      </div>
+      <div class="grid3">
+        <figure class="card" data-reveal style="--d:0s;margin:0">
+          <div class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</div>
+          <blockquote>I didn't expect to notice. Two days in, my bedroom just felt fresher.</blockquote>
+          <figcaption class="who"><span class="avatar">PS</span><span><b>Priya S.</b><small>Blueair Home</small></span></figcaption>
+        </figure>
+        <figure class="card" data-reveal style="--d:.1s;margin:0">
+          <div class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</div>
+          <blockquote>So quiet I forgot it was on. My dog hasn't noticed it either.</blockquote>
+          <figcaption class="who"><span class="avatar">DM</span><span><b>Daniel M.</b><small>Blueair Mini</small></span></figcaption>
+        </figure>
+        <figure class="card" data-reveal style="--d:.2s;margin:0">
+          <div class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</div>
+          <blockquote>Setup took two minutes. Way less dust on the shelves, which is a nice bonus.</blockquote>
+          <figcaption class="who"><span class="avatar">AO</span><span><b>Amara O.</b><small>Blueair Max</small></span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="models">
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <p class="eyebrow">Models</p>
+        <h2>Pick the one for your room.</h2>
+        <p class="lede">Same quiet, same fresh feel. Just sized to fit your space.</p>
+      </div>
+      <div class="grid3 models">
+        <article class="card model" data-reveal style="--d:0s">
+          <div class="pic"><svg viewBox="0 0 120 220" style="height:150px" aria-hidden="true"><use href="#purifier"/></svg></div>
+          <h3>Blueair Mini</h3>
+          <p class="for">Bedrooms and desks, up to 215 sq ft</p>
+          <ul><li>HEPA filter</li><li>Sleep mode at 24 dB</li><li>Filter lasts 6 months</li></ul>
+          <div class="buy"><div class="price">$129</div><button class="btn btn-primary add" type="button" data-name="Blueair Mini">Add to cart</button></div>
+        </article>
+        <article class="card model pop" data-reveal style="--d:.1s">
+          <span class="tag">Most popular</span>
+          <div class="pic"><svg viewBox="0 0 120 220" style="height:185px" aria-hidden="true"><use href="#purifier"/></svg></div>
+          <h3>Blueair Home</h3>
+          <p class="for">Living rooms, up to 540 sq ft</p>
+          <ul><li>HEPA filter plus carbon layer</li><li>Auto mode and the Blueair app</li><li>Filter lasts 6 months</li></ul>
+          <div class="buy"><div class="price">$249</div><button class="btn btn-primary add" type="button" data-name="Blueair Home">Add to cart</button></div>
+        </article>
+        <article class="card model" data-reveal style="--d:.2s">
+          <div class="pic"><svg viewBox="0 0 120 220" style="height:215px" aria-hidden="true"><use href="#purifier"/></svg></div>
+          <h3>Blueair Max</h3>
+          <p class="for">Open spaces, up to 900 sq ft</p>
+          <ul><li>Dual HEPA filters</li><li>Auto mode and the Blueair app</li><li>Filter lasts 8 months</li></ul>
+          <div class="buy"><div class="price">$399</div><button class="btn btn-primary add" type="button" data-name="Blueair Max">Add to cart</button></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="day">
+    <div class="wrap faq-grid">
+      <div data-reveal>
+        <p class="eyebrow">FAQ</p>
+        <h2>Good questions.</h2>
+        <p class="lede">Can't find yours? Our team replies within a day.</p>
+      </div>
+      <div class="faq-list" data-reveal>
+        <details><summary>How often do I change the filter?</summary><p>About every 6 months. The Blueair app tells you when it's time.</p></details>
+        <details><summary>How loud is it?</summary><p>On sleep mode it runs at 24 dB. On full speed it's about 52 dB, like a quiet conversation.</p></details>
+        <details><summary>What size room does it cover?</summary><p>Mini covers 215 sq ft, Home covers 540 sq ft and Max covers 900 sq ft.</p></details>
+        <details><summary>How much power does it use?</summary><p>Home uses about 30 watts on medium. That's close to a small lamp.</p></details>
+        <details><summary>Can I return it?</summary><p>Yes. You get 30 days to try it at home, and returns are free.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap cta-wrap">
+    <div class="cta" data-reveal>
+      <div>
+        <h2>Ready for fresher air?</h2>
+        <p>Free shipping and 30 days to try it at home.</p>
+      </div>
+      <a class="btn" href="#models">Shop Blueair</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Blueair home"><svg style="color:var(--accent)"><use href="#drop"/></svg>Blue<b>air</b></a>
+    <nav aria-label="Footer"><a href="#benefits">Benefits</a><a href="#how">How it works</a><a href="#models">Models</a><a href="#faq">FAQ</a></nav>
+    <span>© 2026 Blueair. All rights reserved.</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  (function () {
+    var $ = function (s) { return document.querySelector(s); };
+
+    // Mobile menu
+    var menu = $('#menu'), links = $('#links');
+    menu.addEventListener('click', function () {
+      var open = links.classList.toggle('open');
+      menu.setAttribute('aria-expanded', String(open));
+    });
+    links.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') { links.classList.remove('open'); menu.setAttribute('aria-expanded', 'false'); }
+    });
+
+    // Cart
+    var n = 0, count = $('#count'), cart = $('#cart'), toast = $('#toast'), t;
+    function say(msg) {
+      toast.textContent = msg; toast.classList.add('show');
+      clearTimeout(t); t = setTimeout(function () { toast.classList.remove('show'); }, 2200);
+    }
+    document.querySelectorAll('.add').forEach(function (b) {
+      b.addEventListener('click', function () {
+        n += 1; count.textContent = n;
+        cart.setAttribute('aria-label', 'Cart, ' + n + (n === 1 ? ' item' : ' items'));
+        var old = b.textContent; b.textContent = 'Added';
+        setTimeout(function () { b.textContent = old; }, 1400);
+        say(b.dataset.name + ' added to cart');
+      });
+    });
+    cart.addEventListener('click', function () {
+      say(n ? n + (n === 1 ? ' item' : ' items') + ' in your cart' : 'Your cart is empty');
+    });
+
+    // Gentle live reading
+    var pm = $('#pm'), vals = [3, 4, 4, 5, 4, 3, 4];
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      var i = 0; setInterval(function () { i = (i + 1) % vals.length; pm.textContent = vals[i]; }, 3200);
+    }
+
+    // Scroll reveal for sections below the first screen
+    var items = document.querySelectorAll('[data-reveal]');
+    if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      items.forEach(function (el) {
+        if (el.getBoundingClientRect().top > window.innerHeight) { el.classList.add('pre'); io.observe(el); }
+      });
+    }
+  })();
+</script>
